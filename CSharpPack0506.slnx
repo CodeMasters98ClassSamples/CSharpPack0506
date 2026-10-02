@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="info.txt" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="CSharpPack0506.MyConsole/CSharpPack0506.MyConsole.csproj" />
+    <Project Path="CSharpPack0506.MyConsoleTopLevel/CSharpPack0506.MyConsoleTopLevel.csproj" />
+    <Project Path="CSharpPack0506.MyWinFormsApp/CSharpPack0506.MyWinFormsApp.csproj" Id="1cf6c722-d524-493b-97a8-8d8ff257e168" />
+  </Folder>
+</Solution>

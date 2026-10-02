@@ -1,0 +1,102 @@
+﻿-- Syntax
+1- end with ;
+2- Case sensitive
+3- Block base { ... }
+4- .cs -> Done
+5- C# Type Safe
+6- C# type Fix
+7- All class must be in namespace (فضای نام)
+8- Human readable
+9- سطح بالا بودن
+10- Zero Index
+
+-- Syntax
+    - Output
+	- Varibale
+	- type -> conversion
+	- if
+	- switch
+	- Loop 
+		-> for (1 topic => count?) / while / do while / foreach
+		-> runtime
+		-> control: continue , break
+
+-- Software Eng
+	- Readable (خوانا)
+	- Tracibility
+	- Clean Code
+
+-- Trace
+	-- Set Break piont
+	-- Debug (Debugging)
+	-- watcher
+
+-- Compile Time / Run time
+
+-- SDK -> Software Develop Kit
+
+-- Application: 
+	- type 
+		- Web Service
+		- Web Application -> GUI
+		- Windows Application -> GUI
+		- Console Application
+		- Windows Service
+		- WPF Windows App
+		- Mobile Application
+	- Funcationality (عملکرد)
+		- IO Bound
+		- Cpu Bound
+		****
+		- Interface (رابط کاربری)
+		- User input
+		- User output
+
+
+--Variable
+	- DataType -> نوع داده
+		- Type -> رشته ، عدد، bool	
+		- Size -> عدد خیلی بزرگ ، عدد متوسط، عدد کوچیک
+		- Sub type -> عدد اعشاری، عدد صحیح
+	- Declare Vaiable
+	- PreDefined Data type
+	- Initial Value
+	- Default Value -> Default Keyword
+************
+--Conversion
+	- Non compatible Type conversion -> (string -> int) or (int -> string)
+	- Implicit
+	- Explicit
+
+-- Data -> process -> information
+	- Data Prepare
+	- Data Cleaning => +989129564205 => (+98) -> 0
+
+--string
+	-work with strings
+	    - IsNullOrEmpty => null , ""
+		- Concat => "C" + "#" => "C#"
+		- StartWith => "Parham" => "P" => true / "s" => False
+		- EndWith
+		- Length => "09129564205" / "0020000000" / "PostalCode..."
+		- Replace
+		- SubString -> count , index (شمارنده)
+		- ...
+
+--Branching
+	if
+		-Code Path
+	switch
+
+- Nameing
+	- Pascal case => FirstName
+	- camel case => firstName
+
+* Git & Github
+* Methods
+	- Write a function
+	- Call a function
+	- input , output
+	- void
+	- overload
+	- چند ریختی
