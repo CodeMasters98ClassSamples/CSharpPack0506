@@ -93,6 +93,7 @@
 	- camel case => firstName
 
 * Git & Github
+	- clone: git clone https://github.com/CodeMasters98ClassSamples/CSharpPack0506.git
 * Methods
 	- Write a function
 	- Call a function
