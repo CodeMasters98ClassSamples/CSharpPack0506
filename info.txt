@@ -10,6 +10,17 @@
 9- سطح بالا بودن
 10- Zero Index
 
+C# , Go , Py , JS , ...
+
+-- Level -> پیچیدگی (Complexity)
+	 -> Tech stack -> Tools , Programming language , Protocol , System Design ,..
+		-> Job description: RabbitMq, Docker, ...
+	 -> Domain (حوزه کسب و کار)
+		-> Constraint , Domain Expert
+
+--SDLC => چرخه توسعه نرم افزار
+	+ AI SDLC
+
 -- Syntax
     - Output
 	- Varibale
@@ -62,6 +73,10 @@
 	- PreDefined Data type
 	- Initial Value
 	- Default Value -> Default Keyword
+		- int -> 0
+		- bool -> false
+		- string -> null
+		- DateTime -> min value
 ************
 --Conversion
 	- Non compatible Type conversion -> (string -> int) or (int -> string)
@@ -94,6 +109,7 @@
 
 * Git & Github
 	- clone: git clone https://github.com/CodeMasters98ClassSamples/CSharpPack0506.git
+
 * Methods
 	- Write a function
 	- Call a function
@@ -101,3 +117,37 @@
 	- void
 	- overload
 	- چند ریختی
+
+- Data Type
+	+ Premitive data type
+	+ User Define Data Type / complex data type
+
++  و مسئلع / ابهام
+	
++ من یه نرم افزار برای دانشجویان برای ثبت نام در کلاس آموزشی
+
+
++ Data Retention
++ Data Lifecycle
+
+
++ Modeling
+	+ OOP 
+		-> Class
+			-> User Define Data Type , template for object
+				-> Class member: Properties , Methods
+
+	+ constructor
+	+ base vs this
+	+ properties
+
+Question:
+	1- چند تا تاپیک کلاس
+	2- کلاس چقدر ظرفیت داره
+	3- دانشجو ازش چه اطلاعاتی نیاز داریم؟
+	4- نرم افزار
+
+	- Junior
+		-> imp
+	- Senior
+		-> 

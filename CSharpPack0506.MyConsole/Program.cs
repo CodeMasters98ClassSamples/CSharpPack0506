@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using CSharpPack0506.MyConsole.Models;
 
 namespace CSharpPack0506.MyConsole
 {
@@ -6,6 +6,42 @@ namespace CSharpPack0506.MyConsole
     {
         static void Main(string[] args)
         {
+
+
+            // روش اول
+            //شی / instance / نمونه/ object
+            //Student s = new();
+            //s.Name = "Parham";
+            //s.LastName = "Darvishi";
+            //s.MobileNumebr = "09129";
+            //s.BithDate = DateTime.Now.AddYears(-50);
+            //string info = s.GetInfo();
+            //Console.WriteLine(s.GetInfo());
+
+            DateTime date = DateTime.Now.AddYears(-50);
+
+            //روش دوم
+            try
+            {
+
+                Master master = new Master();
+
+                Console.WriteLine("Please enter your name?");
+                string name = Console.ReadLine();
+
+                Student s = new(name: name, lastName: "Darvishi", mobile: "09129", nationalCode: "09129",birthDate: date);
+                Console.WriteLine(s.GetInfo());
+            }
+            catch (Exception ex)
+            {
+                //Log -> File , Db , ...
+                //Alert
+                throw;
+            }
+
+
+
+            int num1 = 1;
             string num1Str = Console.ReadLine();
             string num2Str = Console.ReadLine();
             int result = Sum(num1Str, num2Str);
@@ -81,6 +117,8 @@ namespace CSharpPack0506.MyConsole
             return num1 + num2;
         }
 
+
+        //standard
         static int Sum(string num1, string num2)
         {
             return int.Parse(num1) + int.Parse(num2);
