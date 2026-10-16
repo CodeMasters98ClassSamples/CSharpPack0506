@@ -12,6 +12,9 @@
 
 C# , Go , Py , JS , ...
 
+- Domain
+	- 10 Usecase -> dictionary
+
 -- Level -> پیچیدگی (Complexity)
 	 -> Tech stack -> Tools , Programming language , Protocol , System Design ,..
 		-> Job description: RabbitMq, Docker, ...
@@ -135,11 +138,54 @@ C# , Go , Py , JS , ...
 	+ OOP 
 		-> Class
 			-> User Define Data Type , template for object
+				-> object, instance , شی,
 				-> Class member: Properties , Methods
 
 	+ constructor
 	+ base vs this
 	+ properties
+
++ Principles
+	+ DRY
+
++ Decomposition
+	+ Decomope by subdomain
+
+.sln -> solution -> sematec-co.com
+	+ Folder Strcuture
+		+ docs
+			+ information, docs
+		+ src
+			+ panel
+			+ backend
+			+ sso
+			+ website
+			+ teacher
+
++ Program
+	+ Code
+	+ Config
+
++ File
+	+ Path
+	+ extension
+	+ File
+	-> .NET Framework
+
++ C#
+	-> string methods
+	-> Windows form tools
+	-> disadvantages of hard code
+
++ Console Application
+	+ User Intraction -> console.writeline , console.readline
+
++ GUI 
+	+ Windows Form Application
+		+ UI -> Form
+	+ WPF
+	+ Mobile Application
+	+ Web Application -> .NET
 
 Question:
 	1- چند تا تاپیک کلاس

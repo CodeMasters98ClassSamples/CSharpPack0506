@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CSharpPack0506.MyConsole.Models
 {
+    //template
     internal class User
     {
         public User(string name, string lastName, string mobile, string nationalCode)

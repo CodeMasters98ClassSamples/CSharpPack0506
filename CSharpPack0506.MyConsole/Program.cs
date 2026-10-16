@@ -25,7 +25,6 @@ namespace CSharpPack0506.MyConsole
             {
 
                 Master master = new Master();
-
                 Console.WriteLine("Please enter your name?");
                 string name = Console.ReadLine();
 
