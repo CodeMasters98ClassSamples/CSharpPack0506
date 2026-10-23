@@ -13,7 +13,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSharpPack0506.BusinessLayer\CSharpPack0506.BusinessLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Files\Configs\logins.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\MockData\students.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

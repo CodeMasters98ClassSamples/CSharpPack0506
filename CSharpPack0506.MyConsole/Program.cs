@@ -1,4 +1,5 @@
-﻿using CSharpPack0506.MyConsole.Models;
+﻿
+using CSharpPack0506.DataLayer.Models;
 
 namespace CSharpPack0506.MyConsole
 {
@@ -24,7 +25,7 @@ namespace CSharpPack0506.MyConsole
             try
             {
 
-                Master master = new Master();
+                //Master master = new Master();
                 Console.WriteLine("Please enter your name?");
                 string name = Console.ReadLine();
 

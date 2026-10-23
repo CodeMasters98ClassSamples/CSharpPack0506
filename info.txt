@@ -162,13 +162,20 @@ C# , Go , Py , JS , ...
 			+ website
 			+ teacher
 
+node js
+	-> npm
+.net 
+	-> pmc
+
 + Program
 	+ Code
 	+ Config
+	+ dependancies -> packages
 
 + File
 	+ Path
 	+ extension
+		-> package donwload & use
 	+ File
 	-> .NET Framework
 
@@ -176,6 +183,8 @@ C# , Go , Py , JS , ...
 	-> string methods
 	-> Windows form tools
 	-> disadvantages of hard code
+
++ Architecture
 
 + Console Application
 	+ User Intraction -> console.writeline , console.readline
@@ -187,6 +196,19 @@ C# , Go , Py , JS , ...
 	+ Mobile Application
 	+ Web Application -> .NET
 
++ Extension methods
++ static class & members
++ install packages
++ newtonsoft
++ json -> class
++ mock
+
+
+Usermanagment -> managment -> شناسایی
+
+json -> data -> hold , transfer
+	+ self describe
+	+ key value
 Question:
 	1- چند تا تاپیک کلاس
 	2- کلاس چقدر ظرفیت داره
