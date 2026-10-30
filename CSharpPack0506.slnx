@@ -12,6 +12,7 @@
   <Folder Name="/src/PresentationLayer/">
     <Project Path="CSharpPack0506.MyConsole/CSharpPack0506.MyConsole.csproj" />
     <Project Path="CSharpPack0506.MyConsoleTopLevel/CSharpPack0506.MyConsoleTopLevel.csproj" />
+    <Project Path="CSharpPack0506.MyWebApplication/CSharpPack0506.MyWebApplication.csproj" Id="aac737e3-5e77-4455-8907-13a70158136f" />
     <Project Path="CSharpPack0506.MyWinFormsApp/CSharpPack0506.MyWinFormsApp.csproj" Id="1cf6c722-d524-493b-97a8-8d8ff257e168" />
   </Folder>
 </Solution>

@@ -203,8 +203,64 @@ node js
 + json -> class
 + mock
 
+* string -> json
+
+
+Project	
+	+ .exe
+	+ dll
+
+Programming Language
+	Type Conversion
+		+ int -> string
+		+ string -> int
+		+ long -> int
+		+ int -> long
+		+ object -> string -> .tostring()
+		+ string -> object, list<object> => string => List<Student>
+	File
+		-> Open, Read, Write ,...
 
 Usermanagment -> managment -> شناسایی
+
+Domain Centeric
+
+Layer
+	+ Folder: 1 - n project 
+
+DRY
+	Inheritance
+	Methods
+
+Web Design
+	HTML
+	CSS
+	JS
+
+Sql Server 2022
+	Database
+		Table
+			insert , update , detele , select
+		
+
+Dtos
+	-> Data Transfer Objects
+
+AI 
+	-> vibe coding
+	-> question answering
+		
+
+Database
+	+ install -> service , ssms
+	+ Sql Server , DB2 , Oracel , Postgre , MongoDb , Quadrant , Redis , ...
+	+ Type
+		+ relational
+		+ grapgh
+		+ time-series database
+		+ nosql
+		+ vector
+	+ COnnection, Command/query
 
 json -> data -> hold , transfer
 	+ self describe

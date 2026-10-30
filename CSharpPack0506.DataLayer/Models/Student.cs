@@ -35,7 +35,7 @@ public class Student : User
 
     //property
    
-    public string Relation { get; set; }
+    public string LastDocument { get; set; }
 
     public void Register()
     {
