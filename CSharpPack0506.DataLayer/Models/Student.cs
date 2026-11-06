@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpPack0506.DataLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -35,7 +36,7 @@ public class Student : User
 
     //property
    
-    public string LastDocument { get; set; }
+    public LastDocumentTypes LastDocument { get; set; }
 
     public void Register()
     {

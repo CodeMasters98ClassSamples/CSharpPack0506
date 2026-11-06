@@ -1,4 +1,15 @@
 <Solution>
+  <Folder Name="/database/" />
+  <Folder Name="/database/scripts/">
+    <File Path="data.sql" />
+  </Folder>
+  <Folder Name="/database/tables/">
+    <File Path="Course.sql" />
+    <File Path="Master.sql" />
+    <File Path="Student.sql" />
+    <File Path="StudentTerm.sql" />
+    <File Path="Term.sql" />
+  </Folder>
   <Folder Name="/docs/">
     <File Path="info.txt" />
   </Folder>

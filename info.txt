@@ -129,10 +129,8 @@ C# , Go , Py , JS , ...
 	
 + من یه نرم افزار برای دانشجویان برای ثبت نام در کلاس آموزشی
 
-
 + Data Retention
 + Data Lifecycle
-
 
 + Modeling
 	+ OOP 
@@ -260,7 +258,12 @@ Database
 		+ time-series database
 		+ nosql
 		+ vector
-	+ COnnection, Command/query
+	+ Connection
+		-> local:13567
+		-> address -> sh-projectsample-db1:5317
+		-> ip -> 192.168.1.2:1433
+		-> windows auth, server auth
+	+ Command/query
 
 json -> data -> hold , transfer
 	+ self describe
@@ -275,3 +278,37 @@ Question:
 		-> imp
 	- Senior
 		-> 
+
+
+data anomalies
+
+Database
+	Types
+	Allow nulls
+	Normal Form
+nvarchar
+varchar
+char
+-> https://www.geeksforgeeks.org/dbms/normal-forms-in-dbms/
+
+- Learning Develop
+	+ multiple play video
+	+ dictionary keyword
+	+ develop & teaching
+	+ project
+	+ search + book
+	+ 9 - 12 m
+	+ interview
+	+ AI tools
+
+C# pack
+parham darvishi
+سی شارپ آموزش میدیم با ویندوز فرم و مفاهیم توسعه
+
+1
+0506
+13.900.000
+
+2
+0509
+14.500.00
