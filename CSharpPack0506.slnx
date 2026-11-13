@@ -11,6 +11,7 @@
     <File Path="Term.sql" />
   </Folder>
   <Folder Name="/docs/">
+    <File Path="commands.txt" />
     <File Path="info.txt" />
   </Folder>
   <Folder Name="/src/" />

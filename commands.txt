@@ -1,0 +1,5 @@
+--Reset windows network
+net stop hns
+net start hns
+
+

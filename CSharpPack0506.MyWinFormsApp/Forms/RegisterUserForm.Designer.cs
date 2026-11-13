@@ -40,6 +40,8 @@
             createUserButton = new Button();
             userDataGridView = new DataGridView();
             showByMockButton = new Button();
+            birthDateTimePicker = new DateTimePicker();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)userDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -110,7 +112,7 @@
             // 
             // searchUserButton
             // 
-            searchUserButton.Location = new Point(34, 175);
+            searchUserButton.Location = new Point(34, 223);
             searchUserButton.Name = "searchUserButton";
             searchUserButton.Size = new Size(260, 41);
             searchUserButton.TabIndex = 8;
@@ -119,7 +121,7 @@
             // 
             // createUserButton
             // 
-            createUserButton.Location = new Point(34, 222);
+            createUserButton.Location = new Point(34, 270);
             createUserButton.Name = "createUserButton";
             createUserButton.Size = new Size(260, 41);
             createUserButton.TabIndex = 9;
@@ -138,7 +140,7 @@
             // 
             // showByMockButton
             // 
-            showByMockButton.Location = new Point(34, 269);
+            showByMockButton.Location = new Point(34, 317);
             showByMockButton.Name = "showByMockButton";
             showByMockButton.Size = new Size(260, 41);
             showByMockButton.TabIndex = 11;
@@ -146,11 +148,29 @@
             showByMockButton.UseVisualStyleBackColor = true;
             showByMockButton.Click += showByMockButton_Click;
             // 
+            // birthDateTimePicker
+            // 
+            birthDateTimePicker.Location = new Point(89, 164);
+            birthDateTimePicker.Name = "birthDateTimePicker";
+            birthDateTimePicker.Size = new Size(205, 27);
+            birthDateTimePicker.TabIndex = 12;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 164);
+            label5.Name = "label5";
+            label5.Size = new Size(72, 20);
+            label5.TabIndex = 13;
+            label5.Text = "تاریخ تولد:";
+            // 
             // RegisterUserForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1141, 450);
+            Controls.Add(label5);
+            Controls.Add(birthDateTimePicker);
             Controls.Add(showByMockButton);
             Controls.Add(userDataGridView);
             Controls.Add(createUserButton);
@@ -184,5 +204,7 @@
         private Button createUserButton;
         private DataGridView userDataGridView;
         private Button showByMockButton;
+        private DateTimePicker birthDateTimePicker;
+        private Label label5;
     }
 }

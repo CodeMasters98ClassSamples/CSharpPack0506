@@ -312,3 +312,22 @@ parham darvishi
 2
 0509
 14.500.00
+
+
++ Storage
++ Cpu
++ Ram
++ Network
+
+
+Next Session:
+	- Compelete Project
+	- Update record
+	- Delete record
+	- Checl architecture
+	- Final first version
+
+	+
+	- Start EF/ORM steps
+
+	- event & delegate

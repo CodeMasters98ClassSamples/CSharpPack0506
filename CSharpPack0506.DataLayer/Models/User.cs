@@ -15,7 +15,7 @@ public abstract class User
         //}
         Name = name;
         LastName = lastName;
-        MobileNumebr = mobile;
+        MobileNumber = mobile;
         NationalCode = nationalCode;
     }
 
@@ -24,7 +24,7 @@ public abstract class User
     public int Id { get; set; }
     public string Name { get; set; }
     public string LastName { get; set; }
-    public string MobileNumebr { get; set; }
+    public string MobileNumber { get; set; }
     public string NationalCode { get; set; }
     public DateTime BirthDate { get; set; }
 }

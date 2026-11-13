@@ -13,11 +13,15 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
 {
     public partial class RegisterUserForm : Form
     {
+        StudentBusiness studentBusiness = new();
         public RegisterUserForm()
         {
             InitializeComponent();
 
             //Show Data
+
+            StudentBusiness studentBusiness = new StudentBusiness();
+            userDataGridView.DataSource = studentBusiness.GetStudents();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -37,6 +41,7 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                     lastName = lastNameTextBox.Text,
                     mobile = mobileTextBox.Text,
                     nationalCode = nationalCodeTextBox.Text,
+                    birthDate = birthDateTimePicker.Value,
                 };
 
                 //MobileValidation mobileValidation = new MobileValidation();
@@ -45,8 +50,6 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                     MessageBox.Show("لطفا شماره همراه خود را به صورت صحیح و عددی و با 11 کاراکتر وارد نمایید.");
                     return;
                 }
-
-                int x = 1;
 
                 StudentBusiness studentBusiness = new StudentBusiness();
                 studentBusiness.RegisterByAdmin(dto);
@@ -69,6 +72,18 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
             userDataGridView.DataSource = studentBusiness.LoadStudentMockData();
         }
 
+
+        private async Task AlertManagers()
+        {
+            string baleToken = "";
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://tapi.bale.ai/{baleToken}/sendMessage");
+            var content = new StringContent("{\n    \"chat_id\": \"@chanelName\",\n    \"text\": \"سلام، این یک پیام تست از طرف بات است.\"\n}", null, "application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
+        }
 
        
     }
