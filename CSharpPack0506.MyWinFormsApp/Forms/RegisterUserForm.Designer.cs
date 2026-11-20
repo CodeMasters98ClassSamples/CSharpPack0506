@@ -43,6 +43,8 @@
             birthDateTimePicker = new DateTimePicker();
             label5 = new Label();
             updateStudentButton = new Button();
+            deleteUserButton = new Button();
+            softDeleteUserButton = new Button();
             ((System.ComponentModel.ISupportInitialize)userDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -137,7 +139,7 @@
             userDataGridView.Location = new Point(308, 18);
             userDataGridView.Name = "userDataGridView";
             userDataGridView.RowHeadersWidth = 51;
-            userDataGridView.Size = new Size(821, 420);
+            userDataGridView.Size = new Size(821, 493);
             userDataGridView.TabIndex = 10;
             userDataGridView.CellClick += userDataGridView_CellClick;
             // 
@@ -177,11 +179,33 @@
             updateStudentButton.UseVisualStyleBackColor = true;
             updateStudentButton.Click += updateStudentButton_Click;
             // 
+            // deleteUserButton
+            // 
+            deleteUserButton.Location = new Point(34, 411);
+            deleteUserButton.Name = "deleteUserButton";
+            deleteUserButton.Size = new Size(260, 41);
+            deleteUserButton.TabIndex = 15;
+            deleteUserButton.Text = "حذف کاربر(فیزیکی)";
+            deleteUserButton.UseVisualStyleBackColor = true;
+            deleteUserButton.Click += deleteUserButton_Click;
+            // 
+            // softDeleteUserButton
+            // 
+            softDeleteUserButton.Location = new Point(34, 458);
+            softDeleteUserButton.Name = "softDeleteUserButton";
+            softDeleteUserButton.Size = new Size(260, 41);
+            softDeleteUserButton.TabIndex = 16;
+            softDeleteUserButton.Text = "حذف کاربر(منطقی)";
+            softDeleteUserButton.UseVisualStyleBackColor = true;
+            softDeleteUserButton.Click += softDeleteUserButton_Click;
+            // 
             // RegisterUserForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1141, 450);
+            ClientSize = new Size(1141, 523);
+            Controls.Add(softDeleteUserButton);
+            Controls.Add(deleteUserButton);
             Controls.Add(updateStudentButton);
             Controls.Add(label5);
             Controls.Add(birthDateTimePicker);
@@ -221,5 +245,7 @@
         private DateTimePicker birthDateTimePicker;
         private Label label5;
         private Button updateStudentButton;
+        private Button deleteUserButton;
+        private Button softDeleteUserButton;
     }
 }

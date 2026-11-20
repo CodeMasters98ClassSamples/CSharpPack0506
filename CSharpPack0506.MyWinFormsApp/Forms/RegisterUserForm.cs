@@ -1,11 +1,7 @@
 ﻿using CSharpPack0506.BusinessLayer.Businesses;
 using CSharpPack0506.BusinessLayer.Dtos;
-using CSharpPack0506.BusinessLayer.Extenstions;
 using CSharpPack0506.BusinessLayer.Validations;
 using CSharpPack0506.DataLayer.Models;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace CSharpPack0506.MyWinFormsApp.Forms
 {
@@ -61,10 +57,7 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                 StudentBusiness studentBusiness = new StudentBusiness();
                 studentBusiness.RegisterByAdmin(dto);
                 userDataGridView.DataSource = studentBusiness.GetStudents();
-                firstNameTextBox.Text = default;
-                lastNameTextBox.Text = default;
-                mobileTextBox.Text = default;
-                nationalCodeTextBox.Text = default;
+                ResetForm();
             }
             catch (Exception ex)
             {
@@ -107,7 +100,6 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
 
                 // Access the ID from the row's data
                 var id = (int)row.Cells["Id"].Value;
-
                 // Display or use the ID
                 //MessageBox.Show($"Row ID: {id}");
                 curretStudentForUpdate = studentBusiness.GetById(id);
@@ -130,18 +122,66 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
             bool isSuccess = studentBusiness.Update(dto);
             if (isSuccess)
             {
-                curretStudentForUpdate = null;
                 MessageBox.Show("اطلاعات با موفقیت ویرایش شد.");
-                firstNameTextBox.Text = default;
-                lastNameTextBox.Text = default;
-                mobileTextBox.Text = default;
-                nationalCodeTextBox.Text = default;
+                ResetForm();
             }
             else
             {
                 MessageBox.Show("ویرایش اطلاعات با مشکل مواجه شد.");
             }
 
+        }
+
+        private void deleteUserButton_Click(object sender, EventArgs e)
+        {
+            if (curretStudentForUpdate is null)
+            {
+                MessageBox.Show("لطفا کاربری را جهت حذف انتخاب نمایید.");
+                return;
+            }
+            bool isSuccess = studentBusiness.HardDelete(id: curretStudentForUpdate.Id);
+            if (isSuccess)
+            {
+                MessageBox.Show("اطلاعات با موفقیت حذف شد.");
+                ResetForm();
+            }
+            else
+            {
+                MessageBox.Show("حذف اطلاعات با مشکل مواجه شد.");
+            }
+
+        }
+
+        private void ResetForm()
+        {
+
+            curretStudentForUpdate = null;
+
+            firstNameTextBox.Text = default;
+            lastNameTextBox.Text = default;
+            mobileTextBox.Text = default;
+            nationalCodeTextBox.Text = default;
+            birthDateTimePicker.Value = DateTime.Now;
+        }
+
+        private void softDeleteUserButton_Click(object sender, EventArgs e)
+        {
+            if (curretStudentForUpdate is null)
+            {
+                MessageBox.Show("لطفا کاربری را جهت حذف انتخاب نمایید.");
+                return;
+            }
+
+            bool isSuccess = studentBusiness.SoftDelete(id: curretStudentForUpdate.Id);
+            if (isSuccess)
+            {
+                MessageBox.Show("اطلاعات با موفقیت حذف شد.");
+                ResetForm();
+            }
+            else
+            {
+                MessageBox.Show("حذف اطلاعات با مشکل مواجه شد.");
+            }
         }
     }
 }

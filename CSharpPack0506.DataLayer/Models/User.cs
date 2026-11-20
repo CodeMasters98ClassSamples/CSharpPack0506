@@ -27,4 +27,6 @@ public abstract class User
     public string MobileNumber { get; set; }
     public string NationalCode { get; set; }
     public DateTime BirthDate { get; set; }
+    public bool IsDeleted { get; set; }
+    public DateTime DeletedAt { get; set; }
 }

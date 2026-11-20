@@ -340,7 +340,7 @@ Network plus
 select 1; delete from X;
 
 feature -> ویرایش اطلاعات یک کاربر
-	-> 1- پیدا کردن ردیف انتحاب شده که یک شناسه منحصر به فرذد
+	-> 1- پیدا کردن ردیف انتحاب شده که یک شناسه منحصر به فرد
 	-> 2- نمایش اطلاعات کاربر در فیلدها
 	-> 3- یه دکمه بابت ثبت اطلاعات ویرایش شده داشته باشیم
 	-> 4- object dto create
@@ -361,14 +361,28 @@ Control project tool
 	-> microsoft project
 	-> trello
 
+Select
+	-> Pagination -> chunk by chunk
+	-> where
+	-> business
+	-> Query Plan
+	-> Db Index 
+Search 
+	-> on string -> هزینه بر
+	-> search on front section / search on db section
+
+Delete
+	-> فیزیکی
+	-> منطقی
+
 Next Session:
 	- Compelete Project
-	- Update record
-	- Delete record
 	- Checl architecture
 	- Final first version
 
 	+
 	- Start EF/ORM steps
-
 	- event & delegate
+
+	+ Docker 
+	+ AI Agents

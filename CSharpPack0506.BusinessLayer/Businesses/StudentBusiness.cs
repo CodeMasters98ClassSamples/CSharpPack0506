@@ -93,6 +93,55 @@ public partial class StudentBusiness
         }
     }
 
+    public bool HardDelete(int id)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+                string query = $"DELETE dbo.Student WHERE Id = @Id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+
+    public bool SoftDelete(int id)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+                string query = $"UPDATE dbo.Student SET [IsDeleted] = 1 , DeletedAt = GETDATE() WHERE Id = @Id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
     public Student GetById(int id)
     {
         Student student = new Student();
@@ -150,7 +199,7 @@ public partial class StudentBusiness
                 connection.Open();
 
                 // Create a SQL command to select data from the table
-                string query = $"select * from dbo.Student";
+                string query = $"select * from dbo.Student where IsDeleted = 0";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Create a data reader to fetch the data
