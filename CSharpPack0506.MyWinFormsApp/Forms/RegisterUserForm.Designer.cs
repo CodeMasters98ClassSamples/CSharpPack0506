@@ -42,6 +42,7 @@
             showByMockButton = new Button();
             birthDateTimePicker = new DateTimePicker();
             label5 = new Label();
+            updateStudentButton = new Button();
             ((System.ComponentModel.ISupportInitialize)userDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -118,6 +119,7 @@
             searchUserButton.TabIndex = 8;
             searchUserButton.Text = "جستجو کاربر";
             searchUserButton.UseVisualStyleBackColor = true;
+            searchUserButton.Click += searchUserButton_Click;
             // 
             // createUserButton
             // 
@@ -137,6 +139,7 @@
             userDataGridView.RowHeadersWidth = 51;
             userDataGridView.Size = new Size(821, 420);
             userDataGridView.TabIndex = 10;
+            userDataGridView.CellClick += userDataGridView_CellClick;
             // 
             // showByMockButton
             // 
@@ -164,11 +167,22 @@
             label5.TabIndex = 13;
             label5.Text = "تاریخ تولد:";
             // 
+            // updateStudentButton
+            // 
+            updateStudentButton.Location = new Point(34, 364);
+            updateStudentButton.Name = "updateStudentButton";
+            updateStudentButton.Size = new Size(260, 41);
+            updateStudentButton.TabIndex = 14;
+            updateStudentButton.Text = "ویرایش کاربر";
+            updateStudentButton.UseVisualStyleBackColor = true;
+            updateStudentButton.Click += updateStudentButton_Click;
+            // 
             // RegisterUserForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1141, 450);
+            Controls.Add(updateStudentButton);
             Controls.Add(label5);
             Controls.Add(birthDateTimePicker);
             Controls.Add(showByMockButton);
@@ -206,5 +220,6 @@
         private Button showByMockButton;
         private DateTimePicker birthDateTimePicker;
         private Label label5;
+        private Button updateStudentButton;
     }
 }

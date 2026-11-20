@@ -291,6 +291,19 @@ varchar
 char
 -> https://www.geeksforgeeks.org/dbms/normal-forms-in-dbms/
 
+Database
+	-> Code -> Code first approach
+	-> Database first approach -> Done!
+
+Application
+	-> Service connect to X
+		ex: Application connect to db
+		ex: Application connect to bale
+		ex: application connect to shahkar
+	-> integrate
+	-> Connection -> auth user and password,
+	-> network connection -> netwok+
+
 - Learning Develop
 	+ multiple play video
 	+ dictionary keyword
@@ -319,6 +332,34 @@ parham darvishi
 + Ram
 + Network
 
+Network plus
+	-> IP & Port
+	-> ping
+	-> telnet
+
+select 1; delete from X;
+
+feature -> ویرایش اطلاعات یک کاربر
+	-> 1- پیدا کردن ردیف انتحاب شده که یک شناسه منحصر به فرذد
+	-> 2- نمایش اطلاعات کاربر در فیلدها
+	-> 3- یه دکمه بابت ثبت اطلاعات ویرایش شده داشته باشیم
+	-> 4- object dto create
+	-> 5- ایجاد متد مربوط به ویرایش اطلاعات کاربر
+
+AC -> 
+	1- یک کاربر ویراش کنم
+	2- اطلاعات هر رکورد فقط ویژگی های مربوط به خود آن را اصلاح نماید.
+	3- نام و نام خانوادگی کمتر از 2 نباشید
+	4- ...
+
+Control project tool
+	-> میزیتو
+	-> Azure devops
+	-> jira
+	-> clickup
+	-> plane
+	-> microsoft project
+	-> trello
 
 Next Session:
 	- Compelete Project

@@ -29,7 +29,7 @@ public partial class StudentBusiness
 
 
                 // Create a SQL command to insert a new person record
-                string query = $"IINSERT INTO dbo.Student([Name],LastName,MobileNumber,NationalCode,BirthDate,LastDocument) " +
+                string query = $"INSERT INTO dbo.Student([Name],LastName,MobileNumber,NationalCode,BirthDate,LastDocument) " +
                                 "VALUES(@Name, @LastName ,@MobileNumber, @NationalCode, @BirthDate, @LastDocument)";
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -58,6 +58,83 @@ public partial class StudentBusiness
         }
     }
 
+    public bool Update(UpdateStudentDto dto)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+
+
+                // Create a SQL command to insert a new person record
+                string query = $"UPDATE dbo.Student SET [Name] = @Name , LastName = @LastName WHERE Id = @Id";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Add parameters to the SQL command
+                command.Parameters.AddWithValue("@Id", dto.UserId);
+                command.Parameters.AddWithValue("@Name", dto.Name);
+                command.Parameters.AddWithValue("@LastName", dto.LastName);
+
+                // Execute the insert query
+                int rowsAffected = command.ExecuteNonQuery();
+
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+
+    public Student GetById(int id)
+    {
+        Student student = new Student();
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+
+                // Create a SQL command to select data from the table
+                string query = $"SELECT * FROM dbo.Student WHERE Id = {id}";
+                SqlCommand command = new SqlCommand(query, connection);
+                // Create a data reader to fetch the data
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Read data and map it to Person objects
+                if (reader.Read())
+                {
+                    student.Id = int.Parse(reader["Id"].ToString());
+                    student.Name = reader["Name"].ToString();
+                    student.LastName = reader["LastName"].ToString();
+                    student.MobileNumber = reader["MobileNumber"].ToString();
+                    student.NationalCode = reader["NationalCode"].ToString();
+                    student.BirthDate = DateTime.Parse(reader["BirthDate"].ToString());
+                    student.LastDocument = (LastDocumentTypes)reader["LastDocument"];
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+
+            }
+            return student;
+        }
+        return student;
+    }
 
     public List<Student> GetStudents()
     {
