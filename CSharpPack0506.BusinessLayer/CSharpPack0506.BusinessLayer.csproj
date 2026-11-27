@@ -6,13 +6,13 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<!--
+		Business Layer فقط به Data Layer وابسته است (یک طرفه: Presentation -> Business -> Data).
+		هیچ پکیج مربوط به بانک اطلاعاتی / فایل در این لایه وجود ندارد؛
+		دسترسی به داده از طریق Interface های تعریف شده در Data Layer انجام می شود.
+	-->
 	<ItemGroup>
 		<ProjectReference Include="..\CSharpPack0506.DataLayer\CSharpPack0506.DataLayer.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.2" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	</ItemGroup>
 
 </Project>

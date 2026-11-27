@@ -81,12 +81,14 @@
             ایجادترمToolStripMenuItem.Name = "ایجادترمToolStripMenuItem";
             ایجادترمToolStripMenuItem.Size = new Size(185, 26);
             ایجادترمToolStripMenuItem.Text = "ایجاد ترم";
+            ایجادترمToolStripMenuItem.Click += ایجادترمToolStripMenuItem_Click;
             // 
             // مشاهدهترمهاToolStripMenuItem
             // 
             مشاهدهترمهاToolStripMenuItem.Name = "مشاهدهترمهاToolStripMenuItem";
             مشاهدهترمهاToolStripMenuItem.Size = new Size(185, 26);
             مشاهدهترمهاToolStripMenuItem.Text = "مشاهده ترم ها";
+            مشاهدهترمهاToolStripMenuItem.Click += مشاهدهترمهاToolStripMenuItem_Click;
             // 
             // LayoutForm
             // 
@@ -94,7 +96,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(menuStrip1);
+            IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
+            WindowState = FormWindowState.Maximized;
             Name = "LayoutForm";
             Text = "LayoutForm";
             Load += LayoutForm_Load;

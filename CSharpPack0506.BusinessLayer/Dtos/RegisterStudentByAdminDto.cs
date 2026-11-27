@@ -6,9 +6,9 @@ namespace CSharpPack0506.BusinessLayer.Dtos;
 
 public sealed class RegisterStudentByAdminDto
 {
-    public string name { get; set; }
-    public string lastName { get; set; }
-    public string mobile { get; set; }
-    public string nationalCode { get; set; }
+    public string name { get; set; } = string.Empty;
+    public string lastName { get; set; } = string.Empty;
+    public string mobile { get; set; } = string.Empty;
+    public string nationalCode { get; set; } = string.Empty;
     public DateTime birthDate { get; set; }
 }

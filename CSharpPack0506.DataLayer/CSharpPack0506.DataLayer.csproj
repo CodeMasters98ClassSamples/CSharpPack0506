@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!--
+    Data Layer (DAL) تنها لایه ای است که با بانک اطلاعاتی / فایل / دیتاسورس در ارتباط است.
+    بنابراین پکیج های دسترسی به داده فقط در همین لایه نصب می شوند
+    و لایه های بالاتر (Business / Presentation) هیچ وابستگی مستقیمی به SqlClient و Json ندارند.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <!-- داده های ماک به عنوان منابع داخلی اسمبلی Embed می شوند تا مسیر فایل (Path) در لایه Business نوشته نشود -->
+  <ItemGroup>
+    <EmbeddedResource Include="Data\MockData\students.json" LogicalName="CSharpPack0506.DataLayer.Data.MockData.students.json" />
+    <EmbeddedResource Include="Data\MockData\logins.txt" LogicalName="CSharpPack0506.DataLayer.Data.MockData.logins.txt" />
+  </ItemGroup>
+
 </Project>

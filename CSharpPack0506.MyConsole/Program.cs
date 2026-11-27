@@ -1,166 +1,59 @@
-﻿
+﻿using CSharpPack0506.BusinessLayer;
+using CSharpPack0506.BusinessLayer.Businesses.Abstract;
+using CSharpPack0506.BusinessLayer.Dtos;
+using CSharpPack0506.DataLayer.Configuration;
 using CSharpPack0506.DataLayer.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CSharpPack0506.MyConsole
 {
+    /// <summary>
+    /// لایه نمایش (Console).
+    /// فقط Interface منطق کسب و کار را می شناسد؛ ساخت وابستگی ها در Composition Root انجام می شود.
+    /// </summary>
     internal class Program
     {
+        private const string ConnectionString = "Data Source=.;Database=CSharpPack0506DB;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"CSharpPack0506.MyConsole\";Command Timeout=0";
+
         static void Main(string[] args)
         {
+            // Composition Root: استفاده از داده ماک تا اجرای برنامه نیاز به بانک اطلاعاتی نداشته باشد.
+            // برای اتصال به SQL Server، این خط را با خط زیر جایگزین کنید:
+            // services.AddBusinessLayer(new DatabaseOptions { ConnectionString = ConnectionString });
+            ServiceCollection services = new ServiceCollection();
+            services.AddBusinessLayerWithMockData();
 
+            using ServiceProvider provider = services.BuildServiceProvider();
+            IStudentBusiness studentBusiness = provider.GetRequiredService<IStudentBusiness>();
 
-            // روش اول
-            //شی / instance / نمونه/ object
-            //Student s = new();
-            //s.Name = "Parham";
-            //s.LastName = "Darvishi";
-            //s.MobileNumebr = "09129";
-            //s.BithDate = DateTime.Now.AddYears(-50);
-            //string info = s.GetInfo();
-            //Console.WriteLine(s.GetInfo());
+            ShowStudents(studentBusiness);
 
-            DateTime date = DateTime.Now.AddYears(-50);
-
-            //روش دوم
-            try
+            // نمونه ثبت نام (اعتبارسنجی داخل لایه Business انجام می شود)
+            bool isRegistered = studentBusiness.RegisterByAdmin(new RegisterStudentByAdminDto
             {
+                name = "پرهام",
+                lastName = "درویشی",
+                mobile = "+989129564205",
+                nationalCode = "0020500000",
+                birthDate = DateTime.Now.AddYears(-50),
+            });
 
-                //Master master = new Master();
-                Console.WriteLine("Please enter your name?");
-                string name = Console.ReadLine();
+            Console.WriteLine(isRegistered
+                ? "ثبت نام با موفقیت انجام شد."
+                : "ثبت نام انجام نشد. لطفا اطلاعات را بررسی نمایید.");
 
-                Student s = new(name: name, lastName: "Darvishi", mobile: "09129", nationalCode: "09129",birthDate: date);
-                Console.WriteLine(s.GetInfo());
-            }
-            catch (Exception ex)
-            {
-                //Log -> File , Db , ...
-                //Alert
-                throw;
-            }
-
-
-
-            int num1 = 1;
-            string num1Str = Console.ReadLine();
-            string num2Str = Console.ReadLine();
-            int result = Sum(num1Str, num2Str);
-            Console.WriteLine(result);
-
-            //(int i = 0; i < 5; i++)
-            string mobile = "";
-            do
-            {
-                //0912956420y
-                Console.WriteLine("mobile?");
-                mobile = Console.ReadLine();
-                if (string.IsNullOrEmpty(mobile))
-                {
-                    Console.WriteLine("try again");
-                    continue;
-                }
-
-                //Call a function => فراخوانی متد
-                mobile = FormatMobileNumber(mobile);
-                break;
-            } while (true);
-
-            Console.WriteLine("Age?");
-            string ageStr = Console.ReadLine();
-            int age = int.Parse(ageStr);
-            string role = "xxxx";
-            int discount = 0;
-
-            switch (role)
-            {
-                case "admin":
-                    discount = 10;
-                    break;
-                case "technical":
-                    discount = 30;
-                    break;
-                default:
-                    discount = 0;
-                    break;
-            }
-
-
-            if (role == "admin")
-            {
-                discount = 10;
-            }
-            else if (role == "technical")
-            {
-                discount = 20;
-            }
-            else
-            {
-                discount = 0;
-            }
-            if (result < 50)
-            {
-                Console.WriteLine("alskndfad");
-            }
-            else
-            {
-
-            }
-
+            ShowStudents(studentBusiness);
         }
 
-        // دو تا عدد از کاربر دریافت نمایید و 
-        // به وسیله متد جمع آن را جمع کرده و 
-        // عدد دریافت شده از متد را نمایش دهید
-
-        static int Sum(int num1, int num2)
+        private static void ShowStudents(IStudentBusiness studentBusiness)
         {
-            return num1 + num2;
-        }
+            List<Student> students = studentBusiness.GetStudents();
 
-
-        //standard
-        static int Sum(string num1, string num2)
-        {
-            return int.Parse(num1) + int.Parse(num2);
-        }
-
-        static int Sum(int num1, int num2, int num3)
-        {
-            return num1 + num2 + num3;
-        }
-
-        //Write a function / func
-        static string FormatMobileNumber(string mobile)
-        {
-            mobile = mobile.ToLower().Trim();
-            if (mobile.StartsWith("+98"))
+            Console.WriteLine($"تعداد دانشجویان: {students.Count}");
+            foreach (Student student in students)
             {
-                mobile = mobile.Replace("+98", "0");
+                Console.WriteLine(student.GetInfo());
             }
-            if (mobile.Length == 10 && mobile.StartsWith("9"))
-            {
-                Console.WriteLine("0" + mobile);
-            }
-            return mobile;
-        }
-
-        static decimal CalculateSalary(string employee)
-        {
-            int x = 10;
-            switch (employee)
-            {
-                case "ava":
-                    return 1000000;
-                case "nazanin":
-                    return 100;
-                case "nargess":
-                    return 10000000;
-                case "asal":
-                    return 101;
-                default:
-                    break;
-            }
-            return 1;
         }
     }
 }

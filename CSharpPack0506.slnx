@@ -1,25 +1,28 @@
 <Solution>
-  <Folder Name="/database/" />
-  <Folder Name="/database/scripts/">
-    <File Path="data.sql" />
-  </Folder>
-  <Folder Name="/database/tables/">
-    <File Path="Course.sql" />
-    <File Path="Master.sql" />
-    <File Path="Student.sql" />
-    <File Path="StudentTerm.sql" />
-    <File Path="Term.sql" />
-  </Folder>
   <Folder Name="/docs/">
-    <File Path="commands.txt" />
-    <File Path="info.txt" />
+    <File Path="docs/commands.txt" />
+    <File Path="docs/info.txt" />
+    <File Path="docs/Student.cs" />
+    <File Path="docs/ARCHITECTURE.md" />
   </Folder>
   <Folder Name="/src/" />
-  <Folder Name="/src/BusinessLayer/">
-    <Project Path="CSharpPack0506.BusinessLayer/CSharpPack0506.BusinessLayer.csproj" Id="1f5c073b-256a-42f8-b38b-292e3478e3a9" />
-  </Folder>
   <Folder Name="/src/DataLayer/">
     <Project Path="CSharpPack0506.DataLayer/CSharpPack0506.DataLayer.csproj" Id="435574de-a800-4512-8548-3c04f2248c5d" />
+    <Folder Name="/src/DataLayer/database/">
+      <Folder Name="/src/DataLayer/database/scripts/">
+        <File Path="CSharpPack0506.DataLayer/Database/scripts/data.sql" />
+      </Folder>
+      <Folder Name="/src/DataLayer/database/tables/">
+        <File Path="CSharpPack0506.DataLayer/Database/tables/Course.sql" />
+        <File Path="CSharpPack0506.DataLayer/Database/tables/Master.sql" />
+        <File Path="CSharpPack0506.DataLayer/Database/tables/Student.sql" />
+        <File Path="CSharpPack0506.DataLayer/Database/tables/StudentTerm.sql" />
+        <File Path="CSharpPack0506.DataLayer/Database/tables/Term.sql" />
+      </Folder>
+    </Folder>
+  </Folder>
+  <Folder Name="/src/BusinessLayer/">
+    <Project Path="CSharpPack0506.BusinessLayer/CSharpPack0506.BusinessLayer.csproj" Id="1f5c073b-256a-42f8-b38b-292e3478e3a9" />
   </Folder>
   <Folder Name="/src/PresentationLayer/">
     <Project Path="CSharpPack0506.MyConsole/CSharpPack0506.MyConsole.csproj" />

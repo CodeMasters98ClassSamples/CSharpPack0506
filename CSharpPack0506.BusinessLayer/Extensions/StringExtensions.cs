@@ -1,4 +1,4 @@
-﻿namespace CSharpPack0506.BusinessLayer.Extenstions;
+﻿namespace CSharpPack0506.BusinessLayer.Extensions;
 
 public static class StringExtensions
 {

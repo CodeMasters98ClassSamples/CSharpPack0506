@@ -9,24 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Files\Configs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <!--
+      Composition Root برای ساخت فرم ها و تزریق وابستگی ها.
+      نسخه با TargetFramework پروژه هماهنگ نگه داشته شده است.
+    -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CSharpPack0506.BusinessLayer\CSharpPack0506.BusinessLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Files\Configs\logins.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Files\MockData\students.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

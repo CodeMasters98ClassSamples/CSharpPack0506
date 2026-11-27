@@ -1,22 +1,29 @@
 ﻿using CSharpPack0506.BusinessLayer.Businesses;
+using CSharpPack0506.BusinessLayer.Businesses.Abstract;
 using CSharpPack0506.BusinessLayer.Dtos;
-using CSharpPack0506.BusinessLayer.Validations;
 using CSharpPack0506.DataLayer.Models;
 
 namespace CSharpPack0506.MyWinFormsApp.Forms
 {
     public partial class RegisterUserForm : Form
     {
-        private Student curretStudentForUpdate = null;
-        StudentBusiness studentBusiness = new();
-        public RegisterUserForm()
+        // فرم فقط Interface منطق کسب و کار را می شناسد
+        private readonly IStudentBusiness _studentBusiness;
+
+        private Student? curretStudentForUpdate;
+
+        public RegisterUserForm(IStudentBusiness studentBusiness)
         {
             InitializeComponent();
-
+            _studentBusiness = studentBusiness;
+            var x = new StudentBusiness();
             //Show Data
+            LoadStudents();
+        }
 
-            StudentBusiness studentBusiness = new StudentBusiness();
-            userDataGridView.DataSource = studentBusiness.GetStudents();
+        private void LoadStudents()
+        {
+            userDataGridView.DataSource = _studentBusiness.GetStudents();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -28,9 +35,7 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
         {
             try
             {
-                //static class -> refactor -> json & json -> class
-
-                //Application business rule
+                //Application business rule => داخل لایه Business بررسی می شود
                 RegisterStudentByAdminDto dto = new RegisterStudentByAdminDto()
                 {
                     name = firstNameTextBox.Text,
@@ -40,49 +45,25 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                     birthDate = birthDateTimePicker.Value,
                 };
 
-                if (dto.name.Length < 2 && dto.lastName.Length < 2)
+                bool isSuccess = _studentBusiness.RegisterByAdmin(dto);
+                if (!isSuccess)
                 {
-                    MessageBox.Show("لطفا شماره همراه خود را به صورت صحیح و عددی و با 11 کاراکتر وارد نمایید.");
+                    MessageBox.Show("اطلاعات وارد شده معتبر نمی باشد. لطفا نام، نام خانوادگی و شماره همراه را بررسی نمایید.");
                     return;
                 }
 
-                //MobileValidation mobileValidation = new MobileValidation();
-                if (!MobileValidation.Validate(dto.mobile))
-                {
-                    MessageBox.Show("لطفا شماره همراه خود را به صورت صحیح و عددی و با 11 کاراکتر وارد نمایید.");
-                    return;
-                }
-
-                //DB (Sql server, mysql , posgre , Db2 , oracel) , File , Cache , 
-                StudentBusiness studentBusiness = new StudentBusiness();
-                studentBusiness.RegisterByAdmin(dto);
-                userDataGridView.DataSource = studentBusiness.GetStudents();
+                LoadStudents();
                 ResetForm();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
                 MessageBox.Show("خطایی رخ داده است.");
             }
         }
 
         private void showByMockButton_Click(object sender, EventArgs e)
         {
-            StudentBusiness studentBusiness = new StudentBusiness();
-            userDataGridView.DataSource = studentBusiness.LoadStudentMockData();
-        }
-
-
-        private async Task AlertManagers()
-        {
-            string baleToken = "";
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, $"https://tapi.bale.ai/{baleToken}/sendMessage");
-            var content = new StringContent("{\n    \"chat_id\": \"@chanelName\",\n    \"text\": \"سلام، این یک پیام تست از طرف بات است.\"\n}", null, "application/json");
-            request.Content = content;
-            var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            userDataGridView.DataSource = _studentBusiness.LoadStudentMockData();
         }
 
         private void searchUserButton_Click(object sender, EventArgs e)
@@ -99,37 +80,51 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                 var row = userDataGridView.Rows[e.RowIndex];
 
                 // Access the ID from the row's data
-                var id = (int)row.Cells["Id"].Value;
-                // Display or use the ID
-                //MessageBox.Show($"Row ID: {id}");
-                curretStudentForUpdate = studentBusiness.GetById(id);
+                int id = Convert.ToInt32(row.Cells["Id"].Value);
+
+                curretStudentForUpdate = _studentBusiness.GetById(id);
+                if (curretStudentForUpdate is null)
+                {
+                    MessageBox.Show("اطلاعات کاربر مورد نظر یافت نشد.");
+                    return;
+                }
+
                 firstNameTextBox.Text = curretStudentForUpdate.Name;
                 lastNameTextBox.Text = curretStudentForUpdate.LastName;
                 mobileTextBox.Text = curretStudentForUpdate.MobileNumber;
                 nationalCodeTextBox.Text = curretStudentForUpdate.NationalCode;
-                birthDateTimePicker.Value = curretStudentForUpdate.BirthDate;
+                birthDateTimePicker.Value = curretStudentForUpdate.BirthDate == DateTime.MinValue
+                    ? DateTime.Now
+                    : curretStudentForUpdate.BirthDate;
             }
         }
 
         private void updateStudentButton_Click(object sender, EventArgs e)
         {
+            if (curretStudentForUpdate is null)
+            {
+                MessageBox.Show("لطفا کاربری را جهت ویرایش انتخاب نمایید.");
+                return;
+            }
+
             UpdateStudentDto dto = new UpdateStudentDto()
             {
                 LastName = lastNameTextBox.Text,
                 Name = firstNameTextBox.Text,
                 UserId = curretStudentForUpdate.Id,
             };
-            bool isSuccess = studentBusiness.Update(dto);
+
+            bool isSuccess = _studentBusiness.Update(dto);
             if (isSuccess)
             {
                 MessageBox.Show("اطلاعات با موفقیت ویرایش شد.");
+                LoadStudents();
                 ResetForm();
             }
             else
             {
                 MessageBox.Show("ویرایش اطلاعات با مشکل مواجه شد.");
             }
-
         }
 
         private void deleteUserButton_Click(object sender, EventArgs e)
@@ -139,10 +134,11 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                 MessageBox.Show("لطفا کاربری را جهت حذف انتخاب نمایید.");
                 return;
             }
-            bool isSuccess = studentBusiness.HardDelete(id: curretStudentForUpdate.Id);
+            bool isSuccess = _studentBusiness.HardDelete(id: curretStudentForUpdate.Id);
             if (isSuccess)
             {
                 MessageBox.Show("اطلاعات با موفقیت حذف شد.");
+                LoadStudents();
                 ResetForm();
             }
             else
@@ -154,13 +150,12 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
 
         private void ResetForm()
         {
-
             curretStudentForUpdate = null;
 
-            firstNameTextBox.Text = default;
-            lastNameTextBox.Text = default;
-            mobileTextBox.Text = default;
-            nationalCodeTextBox.Text = default;
+            firstNameTextBox.Text = string.Empty;
+            lastNameTextBox.Text = string.Empty;
+            mobileTextBox.Text = string.Empty;
+            nationalCodeTextBox.Text = string.Empty;
             birthDateTimePicker.Value = DateTime.Now;
         }
 
@@ -172,10 +167,11 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
                 return;
             }
 
-            bool isSuccess = studentBusiness.SoftDelete(id: curretStudentForUpdate.Id);
+            bool isSuccess = _studentBusiness.SoftDelete(id: curretStudentForUpdate.Id);
             if (isSuccess)
             {
                 MessageBox.Show("اطلاعات با موفقیت حذف شد.");
+                LoadStudents();
                 ResetForm();
             }
             else
@@ -185,3 +181,4 @@ namespace CSharpPack0506.MyWinFormsApp.Forms
         }
     }
 }
+

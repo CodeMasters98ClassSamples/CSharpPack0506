@@ -1,9 +1,11 @@
-﻿namespace CSharpPack0506.BusinessLayer.Validations;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CSharpPack0506.BusinessLayer.Validations;
 
 public static class MobileValidation
 {
 
-    public static bool Validate(string mobile)
+    public static bool Validate([NotNullWhen(true)] string? mobile)
     {
         if (mobile == null)
             return false;

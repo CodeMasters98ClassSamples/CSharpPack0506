@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Composition Root برای ساخت وابستگی ها در لایه نمایش -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CSharpPack0506.BusinessLayer\CSharpPack0506.BusinessLayer.csproj" />
   </ItemGroup>
 

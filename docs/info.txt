@@ -12,6 +12,9 @@
 
 C# , Go , Py , JS , ...
 
+
+
+
 - Domain
 	- 10 Usecase -> dictionary
 
@@ -374,6 +377,24 @@ Search
 Delete
 	-> فیزیکی
 	-> منطقی
+
+++ LLD => Low Level Design
+++ HLD => High Level Design
+
++ Single Responsibility
+
++ create interface
+
++ نقشه راه
+	+ یعنی انکه بدانیم کلاس خود را چگونه پیاده سازی کنیم؟
+		+ abstract class
+		+ interface
+		-> از این نوع هیچ گاه نمیتوان new کرد
+
+
++ Repository -> مخزن
+
++ مدیریت داده -> CRUD -> Create , Read , update , delete
 
 Next Session:
 	- Compelete Project

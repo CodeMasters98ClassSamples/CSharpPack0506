@@ -1,240 +1,160 @@
-﻿using CSharpPack0506.BusinessLayer.Dtos;
+﻿using CSharpPack0506.BusinessLayer.Businesses.Abstract;
+using CSharpPack0506.BusinessLayer.Dtos;
+using CSharpPack0506.BusinessLayer.Extensions;
+using CSharpPack0506.BusinessLayer.Validations;
 using CSharpPack0506.DataLayer.Enums;
 using CSharpPack0506.DataLayer.Models;
-using Microsoft.Data.SqlClient;
-using System;
-
+using CSharpPack0506.DataLayer.Repositories.Abstract;
 
 namespace CSharpPack0506.BusinessLayer.Businesses;
 
-public partial class StudentBusiness
+/// <summary>
+/// منطق کسب و کار دانشجو: اعتبارسنجی، تبدیل Dto به Model و فراخوانی Repository.
+/// هیچ کد مربوط به بانک اطلاعاتی یا فایل در این کلاس وجود ندارد (اصل Single Responsibility).
+/// </summary>
+public class StudentBusiness : IStudentBusiness
 {
-    string connectionString = "Data Source=.;Database=CSharpPack0506DB;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0";
-    //obj , file , database
+    private readonly IStudentRepository _studentRepository;
 
-    // List<Student> students { get; set; }
-
-    private static List<Student> students = new List<Student>();
+    // Dependency Injection از طریق Constructor (به جای new کردن دسترسی به داده داخل متدها)
+    public StudentBusiness(IStudentRepository studentRepository)
+    {
+        _studentRepository = studentRepository;
+    }
 
     //Register
     public bool Register(RegisterDto dto)
     {
-        Student st = new Student(dto.name, dto.lastName, dto.mobile, dto.nationalCode);
-        students.Add(st);
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        if (!IsValid(dto.name, dto.lastName, dto.mobile))
+            return false;
+
+        Student st = new Student(
+            name: dto.name.Trim(),
+            lastName: dto.lastName.Trim(),
+            mobile: dto.mobile.ToMobileFormat(),
+            nationalCode: dto.nationalCode?.Trim() ?? string.Empty)
         {
-            try
-            {
-                connection.Open();
+            LastDocument = ParseLastDocument(dto.LastDocument),
+        };
 
+        return Execute(() => _studentRepository.Insert(st));
+    }
 
-                // Create a SQL command to insert a new person record
-                string query = $"INSERT INTO dbo.Student([Name],LastName,MobileNumber,NationalCode,BirthDate,LastDocument) " +
-                                "VALUES(@Name, @LastName ,@MobileNumber, @NationalCode, @BirthDate, @LastDocument)";
-                SqlCommand command = new SqlCommand(query, connection);
+    // ثبت نام توسط ادمین
+    public bool RegisterByAdmin(RegisterStudentByAdminDto dto)
+    {
+        if (!IsValid(dto.name, dto.lastName, dto.mobile))
+            return false;
 
-                // Add parameters to the SQL command
-                command.Parameters.AddWithValue("@Name", st.Name);
-                command.Parameters.AddWithValue("@LastName", st.LastName);
-                command.Parameters.AddWithValue("@MobileNumber", st.MobileNumber);
-                command.Parameters.AddWithValue("@NationalCode", st.NationalCode);
-                command.Parameters.AddWithValue("@BirthDate", st.BirthDate);
-                command.Parameters.AddWithValue("@LastDocument", st.LastDocument);
-
-                // Execute the insert query
-                int rowsAffected = command.ExecuteNonQuery();
-
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
+        if (dto.birthDate == DateTime.MinValue)
+        {
+            // Log -> File , Db , ...
+            Console.WriteLine("Error: تاریخ تولد نامعتبر است.");
+            return false;
         }
+
+        Student st = new Student(
+            name: dto.name.Trim(),
+            lastName: dto.lastName.Trim(),
+            mobile: dto.mobile.ToMobileFormat(),
+            nationalCode: dto.nationalCode?.Trim() ?? string.Empty,
+            birthDate: dto.birthDate);
+
+        bool isSuccess = Execute(() => _studentRepository.Insert(st));
+
+        if (isSuccess)
+            NotifyManager();
+
+        return isSuccess;
     }
 
     public bool Update(UpdateStudentDto dto)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        if (!IsValid(dto.Name, dto.LastName, mobile: null, validateMobile: false))
+            return false;
+
+        Student st = new Student
         {
-            try
-            {
-                connection.Open();
+            Id = dto.UserId,
+            Name = dto.Name.Trim(),
+            LastName = dto.LastName.Trim(),
+        };
 
-
-                // Create a SQL command to insert a new person record
-                string query = $"UPDATE dbo.Student SET [Name] = @Name , LastName = @LastName WHERE Id = @Id";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                // Add parameters to the SQL command
-                command.Parameters.AddWithValue("@Id", dto.UserId);
-                command.Parameters.AddWithValue("@Name", dto.Name);
-                command.Parameters.AddWithValue("@LastName", dto.LastName);
-
-                // Execute the insert query
-                int rowsAffected = command.ExecuteNonQuery();
-
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
+        return Execute(() => _studentRepository.Update(st));
     }
 
     public bool HardDelete(int id)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-                string query = $"DELETE dbo.Student WHERE Id = @Id";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", id);
-                int rowsAffected = command.ExecuteNonQuery();
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
+        return Execute(() => _studentRepository.HardDelete(id));
     }
 
     public bool SoftDelete(int id)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-                string query = $"UPDATE dbo.Student SET [IsDeleted] = 1 , DeletedAt = GETDATE() WHERE Id = @Id";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", id);
-                int rowsAffected = command.ExecuteNonQuery();
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
+        return Execute(() => _studentRepository.SoftDelete(id));
     }
-    public Student GetById(int id)
+
+    public Student? GetById(int id)
     {
-        Student student = new Student();
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-
-                // Create a SQL command to select data from the table
-                string query = $"SELECT * FROM dbo.Student WHERE Id = {id}";
-                SqlCommand command = new SqlCommand(query, connection);
-                // Create a data reader to fetch the data
-                SqlDataReader reader = command.ExecuteReader();
-
-                // Read data and map it to Person objects
-                if (reader.Read())
-                {
-                    student.Id = int.Parse(reader["Id"].ToString());
-                    student.Name = reader["Name"].ToString();
-                    student.LastName = reader["LastName"].ToString();
-                    student.MobileNumber = reader["MobileNumber"].ToString();
-                    student.NationalCode = reader["NationalCode"].ToString();
-                    student.BirthDate = DateTime.Parse(reader["BirthDate"].ToString());
-                    student.LastDocument = (LastDocumentTypes)reader["LastDocument"];
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-
-            }
-            return student;
-        }
-        return student;
+        return Execute(() => _studentRepository.GetById(id));
     }
 
     public List<Student> GetStudents()
     {
-        //Read From DB
-
-        //Connection to Db
-        List<Student> students = new List<Student>();
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-
-                // Create a SQL command to select data from the table
-                string query = $"select * from dbo.Student where IsDeleted = 0";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                // Create a data reader to fetch the data
-                SqlDataReader reader = command.ExecuteReader();
-
-                // Read data and map it to Person objects
-                while (reader.Read())
-                {
-                    Student st = new Student
-                    {
-                        Id = (int)reader["Id"],
-                        Name = reader["Name"].ToString(),
-                        LastName = reader["LastName"].ToString(),
-                        MobileNumber = reader["MobileNumber"].ToString(),
-                        NationalCode = reader["NationalCode"].ToString(),
-                        BirthDate = DateTime.Parse(reader["BirthDate"].ToString()),
-                        LastDocument = (LastDocumentTypes)reader["LastDocument"],
-                    };
-
-                    students.Add(st);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-
-            }
-            return students;
-        }
-        return students;
+        return Execute(() => _studentRepository.GetAll()) ?? new List<Student>();
     }
 
+    // داده ماک: خواندن از دیتاسورس شبیه سازی شده در Data Layer
+    public List<Student> LoadStudentMockData()
+    {
+        return Execute(() => _studentRepository.GetAll()) ?? new List<Student>();
+    }
+
+    private static bool IsValid(string? name, string? lastName, string? mobile, bool validateMobile = true)
+    {
+        if (string.IsNullOrWhiteSpace(name) || name.Trim().Length < 2)
+            return false;
+
+        if (string.IsNullOrWhiteSpace(lastName) || lastName.Trim().Length < 2)
+            return false;
+
+        // ترتیب مهم است: ابتدا شماره همراه به فرم استاندارد تبدیل و سپس اعتبارسنجی می شود
+        // مثلا "+989129564205" ابتدا به "09129564205" تبدیل می شود و سپس معتبر شناخته می شود.
+        if (validateMobile && (mobile is null || !MobileValidation.Validate(mobile.ToMobileFormat())))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// اطلاع رسانی به مدیر (Bale / SMS / Email).
+    /// فعلا پیاده سازی نشده است؛ در آینده با یک سرویس Notification جایگزین می شود.
+    /// </summary>
+    private static void NotifyManager()
+    {
+        //
+    }
+
+    private static LastDocumentTypes ParseLastDocument(string? lastDocument)
+    {
+        return Enum.TryParse(lastDocument, ignoreCase: true, out LastDocumentTypes result)
+            ? result
+            : LastDocumentTypes.NONE;
+    }
+
+    /// <summary>
+    /// مدیریت متمرکز خطا (DRY): پیام خطا یک بار لاگ می شود و خروجی متد false/null می گردد.
+    /// </summary>
+    private static T Execute<T>(Func<T> action)
+    {
+        try
+        {
+            return action();
+        }
+        catch (Exception ex)
+        {
+            // Log -> File , Db , ...
+            Console.WriteLine($"Error: {ex.Message}");
+            return default!;
+        }
+    }
 }

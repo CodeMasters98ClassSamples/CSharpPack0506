@@ -6,7 +6,7 @@ namespace CSharpPack0506.BusinessLayer.Dtos;
 
 public sealed class UpdateStudentDto
 {
-    public string Name { get; set; }
-    public string LastName { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
     public int UserId { get; set; }
 }
